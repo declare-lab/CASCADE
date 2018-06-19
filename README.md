@@ -64,41 +64,6 @@ This implementation of gcca has been adapted from <https://github.com/abenton/wg
 
 ***
 
-#### Discourse Embeddings
-
-Similar to user stylometric features, create the discourse features for each discussion forum (sub-reddit):
-```
-10. cd discourse
-11. python create_per_discourse_paragraph.py
-```
-The ParagraphVector algorithm is used to generate the stylometric features. First, train the model:
-
-```
-12. python train_discourse.py
-```
-generate `discourse.csv` (user stlyometric features) using the trained model: 
-```
-13. python generate_discourse.py
-```
-
-#### Final Predictions
-
-Hybrid CNN combining user-embeddings and discourse-features with textual modeling. 
-```
-14. cd src
-15. python process_data.py
-16. python train_cascade.py
-```
-Detect sarcasm on test set using:
-```
-17. python test_sarcasm.py
-```
-
-
-
-<p align="center">
-  <img src="cca.jpg" alt = "User Embeddings" width="90%">
-</p>
 
 
 
