@@ -12,7 +12,7 @@ In this paper, we propose a ContextuAl SarCasm DEtector (CASCADE), which adopts 
 3. Download and save [user_gcca_embeddings.npz](https://drive.google.com/file/d/1mQoe_48LO67plyo98DVeCC9NabVXdm82/view?usp=sharing) at `./CASCADE/users/user_embeddings/`
 
 #### Optional 
-To train user-embeddings, download the dataset file: `comments.json` from this [link](https://drive.google.com/file/d/1ew-85sh2z3fv1yGgIwBoeIHUvP8fMnxU/view?usp=sharing) and `train-balanced.csv` from this [link](https://drive.google.com/file/d/1Rm_rtF6OvjzQCdhZqjnqrbuDBDUbZ4P1/view?usp=sharing) and save it inside folder: `./CASCADE/data/`
+To train user-embeddings, download the dataset file: `comments.json` [1] from this [link](https://drive.google.com/file/d/1ew-85sh2z3fv1yGgIwBoeIHUvP8fMnxU/view?usp=sharing) and `train-balanced.csv` from this [link](https://drive.google.com/file/d/1Rm_rtF6OvjzQCdhZqjnqrbuDBDUbZ4P1/view?usp=sharing) and save it inside folder: `./CASCADE/data/`.
 
 
 
@@ -45,7 +45,7 @@ generate `user_stylometric.csv` (user stlyometric features) using the trained mo
 
 ### User Embeddings: Personality features
 
-Pre-train a cnn-based model to detect personality features from text. The code utilizes two datasets to train. The second dataset [1] can be obatined by requesting the original authors. 
+Pre-train a cnn-based model to detect personality features from text. The code utilizes two datasets to train. The second dataset [2] can be obatined by requesting the original authors. 
 ```
 5. python process_data.py
 6. python train_personality.py
@@ -123,7 +123,9 @@ If you use this code in your work then please cite the paper - [CASCADE: Context
 
 ## References
 
-[1]. Celli, Fabio, et al. ["Workshop on computational personality recognition (shared task)."](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM13/paper/download/6190/6306) Proceedings of the Workshop on Computational Personality Recognition. 2013.
+[1]. Khodak, Mikhail, Nikunj Saunshi, and Kiran Vodrahalli. "A large self-annotated corpus for sarcasm." arXiv preprint arXiv:1704.05579 (2017).
+
+[2]. Celli, Fabio, et al. ["Workshop on computational personality recognition (shared task)."](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM13/paper/download/6190/6306) Proceedings of the Workshop on Computational Personality Recognition. 2013.
 
 
 
