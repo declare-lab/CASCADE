@@ -123,7 +123,7 @@ If you use this code in your work then please cite the paper - [CASCADE: Context
 
 ## References
 
-[1]. Khodak, Mikhail, Nikunj Saunshi, and Kiran Vodrahalli. "A large self-annotated corpus for sarcasm." arXiv preprint arXiv:1704.05579 (2017).
+[1]. Khodak, Mikhail, Nikunj Saunshi, and Kiran Vodrahalli. ["A large self-annotated corpus for sarcasm."](https://arxiv.org/abs/1704.05579) arXiv preprint arXiv:1704.05579 (2017).
 
 [2]. Celli, Fabio, et al. ["Workshop on computational personality recognition (shared task)."](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM13/paper/download/6190/6306) Proceedings of the Workshop on Computational Personality Recognition. 2013.
 
