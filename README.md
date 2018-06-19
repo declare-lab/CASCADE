@@ -45,7 +45,7 @@ generate `user_stylometric.csv` (user stlyometric features) using the trained mo
 
 ### User Embeddings: Personality features
 
-Pre-train a cnn-based model to detect personality features from text:
+Pre-train a cnn-based model to detect personality features from text. The code utilizes two datasets to train. The second dataset [1] can be obatined by requesting the original authors. 
 ```
 5. python process_data.py
 6. python train_personality.py
@@ -120,6 +120,10 @@ If you use this code in your work then please cite the paper - [CASCADE: Context
   year={2018}
 }
 ```
+
+## References
+
+1. Celli, Fabio, et al. ["Workshop on computational personality recognition (shared task)."](http://www.aaai.org/ocs/index.php/ICWSM/ICWSM13/paper/download/6190/6306) Proceedings of the Workshop on Computational Personality Recognition. 2013.
 
 
 
