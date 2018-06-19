@@ -8,7 +8,8 @@ In this paper, we propose a ContextuAl SarCasm DEtector (CASCADE), which adopts 
 
 ## Requirements
 1. Python (2.7 or 3)  
-2. Tensorflow (1.4.0)  
+2. Tensorflow (1.4.0) 
+3. [FastText pre-trained embeddings](https://s3-us-west-1.amazonaws.com/fasttext-vectors/crawl-300d-2M.vec.zip)   
 3. Download and save [user_gcca_embeddings.npz](https://drive.google.com/file/d/1mQoe_48LO67plyo98DVeCC9NabVXdm82/view?usp=sharing) at `./CASCADE/users/user_embeddings/`
 
 #### Optional 
@@ -47,7 +48,7 @@ generate `user_stylometric.csv` (user stlyometric features) using the trained mo
 
 Pre-train a cnn-based model to detect personality features from text. The code utilizes two datasets to train. The second dataset [2] can be obatined by requesting the original authors. 
 ```
-5. python process_data.py
+5. python process_data.py [path/to/FastText_embedding]
 6. python train_personality.py
 ```
 To use the pre-trained model from our experiments, download the model weights: [personality_model_weights.zip](https://drive.google.com/file/d/1KK0p6tStgaEXLtAni1u3_W2jGlq8g1Nq/view?usp=sharing)  
@@ -102,7 +103,7 @@ generate `discourse.csv` (user stlyometric features) using the trained model:
 Hybrid CNN combining user-embeddings and discourse-features with textual modeling. 
 ```
 14. cd src
-15. python process_data.py
+15. python process_data.py [path/to/FastText_embedding]
 16. python train_cascade.py
 ```
 The CNN codebase has been adapted from <https://github.com/dennybritz/cnn-text-classification-tf>
