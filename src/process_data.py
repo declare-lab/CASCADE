@@ -6,11 +6,14 @@ import pandas as pd
 import csv
 import json
 import codecs
-#./../GoogleNews-vectors-negative300.bin
 
-def build_data_cv(data_folder, category, cv=10, clean_string=True):
+COMMENTS_FILE = "../data/comments.json"
+TRAIN_MAP_FILE = "../data/my_train_balanced.csv"
+TEST_MAP_FILE = "../data/my_test_balanced.csv"
+
+def build_data_cv(data_folder, cv=10, clean_string=True):
     """
-    Loads data and split into 10 folds.
+    Loads data
     """
     revs = []
 
@@ -20,7 +23,7 @@ def build_data_cv(data_folder, category, cv=10, clean_string=True):
     train_data = np.asarray(pd.read_csv(sarc_train_file, header=None))
     test_data = np.asarray(pd.read_csv(sarc_test_file, header=None))
 
-    comments = json.loads(open("./../"+category+"/comments.json").read())
+    comments = json.loads(open(COMMENTS_FILE).read())
     vocab = defaultdict(float)
 
 
@@ -81,9 +84,6 @@ def build_data_cv(data_folder, category, cv=10, clean_string=True):
         revs.append(datum)
         
 
-
-
-    
     return revs, vocab
 
 def get_W(word_vecs, k=300):
@@ -120,18 +120,17 @@ def load_fasttext(fname, vocab):
     """
     Loads 300x1 word vecs from Fasttext
     """
-    print("Loading FastText Model")
-    with codecs.open(fname, "r", "cp1251") as f:
-        model = {}
-	lines = f.read().encode('utf-8')
-        for line in lines:
-            splitLine = line.split()
-            word = splitLine[0]
-            embedding = np.array([float(val) for val in splitLine[1:]])
-            if word in vocab:
-                   model[word] = embedding
+    print "Loading FastText Model"
+    f = open(fname,'r')
+    model = {}
+    for line in f:
+        splitLine = line.split()
+        word = splitLine[0]
+        embedding = np.array([float(val) for val in splitLine[1:]])
+        if word in vocab:
+               model[word] = embedding
 
-    print("Done.",len(model)," words loaded!")
+    print "Done.",len(model)," words loaded!"
     return model
 
     return word_vecs
@@ -200,17 +199,16 @@ def clean_str_sst(string):
 if __name__=="__main__":  
 
     w2v_file = sys.argv[1]    
-    category = sys.argv[2] 
-    data_folder = ["./../dataset/"+category+"/my_train_balanced.csv","./../dataset/"+category+"/my_test_balanced.csv"] 
+    data_folder = [TRAIN_MAP_FILE,TEST_MAP_FILE] 
     print("loading data...")
-    revs, vocab = build_data_cv(data_folder, category, cv=10, clean_string=True)
+    revs, vocab = build_data_cv(data_folder,  cv=10, clean_string=True)
     max_l = np.max(pd.DataFrame(revs)["num_words"])
     print("data loaded!")
     print("number of sentences: " + str(len(revs)))
     print("vocab size: " + str(len(vocab)))
     print("max sentence length: " + str(max_l))
     print("loading word2vec vectors...")
-    w2v = load_bin_vec(w2v_file, vocab)
+    w2v = load_fasttext(w2v_file, vocab) 
     print("word2vec loaded!")
     print("num words already in word2vec: " + str(len(w2v)))
     add_unknown_words(w2v, vocab)
@@ -218,5 +216,5 @@ if __name__=="__main__":
     rand_vecs = {}
     add_unknown_words(rand_vecs, vocab)
     W2, _ = get_W(rand_vecs)
-    pickle.dump([revs, W, W2, word_idx_map, vocab, max_l], open(category+"balancedpickle.p", "wb"))
+    pickle.dump([revs, W, W2, word_idx_map, vocab, max_l], open("mainbalancedpickle.p", "wb"))
     print("dataset created!")
