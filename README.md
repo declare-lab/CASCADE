@@ -13,7 +13,7 @@ In this paper, we propose a ContextuAl SarCasm DEtector (CASCADE), which adopts 
 3. Download and save [user_gcca_embeddings.npz](https://drive.google.com/file/d/1mQoe_48LO67plyo98DVeCC9NabVXdm82/view?usp=sharing) at `./CASCADE/users/user_embeddings/`
 
 #### Optional 
-To train user-embeddings, download the dataset file: `comments.json` [1] from this [link](https://drive.google.com/file/d/1ew-85sh2z3fv1yGgIwBoeIHUvP8fMnxU/view?usp=sharing) and `train-balanced.csv` from this [link](https://drive.google.com/file/d/1Rm_rtF6OvjzQCdhZqjnqrbuDBDUbZ4P1/view?usp=sharing) and save it inside folder: `./CASCADE/data/`.
+To train user-embeddings, download the dataset file: `comments.json` [1] from this [link](https://drive.google.com/file/d/1ew-85sh2z3fv1yGgIwBoeIHUvP8fMnxU/view?usp=sharing) and `train-balanced.csv` from this [link](https://drive.google.com/file/d/18GwcTqXo_lcMJmc5ms6s2KaL0Dh-95GP/view) and save it inside folder: `./CASCADE/data/`.
 
 
 
