@@ -1,46 +1,53 @@
-import pandas as pd, numpy as np, csv
-import math, json, sys
+#!/usr/bin/env python
+from __future__ import absolute_import, division, print_function, unicode_literals
 
-# Filepaths
-DATASET = "./../data/comments.json"
+import collections
+import csv
 
-# Output Files
-USER_COMMENTS = "./train_balanced_user.csv"
+import ijson.backends.yajl2_cffi as ijson
+from six import iteritems
+from tqdm import tqdm
 
+COMMENTS_DATASET_FILE_PATH = '../data/comments.json'
 
-# Load the dataset
-sys.stdout.write("Loading dataset ..."+'\r')
-sys.stdout.flush()
-json_data = json.load(open(DATASET,"r"))
-
-# Set of unique users
-sys.stdout.write("Calculating set of users..."+'\r')
-sys.stdout.flush()
-data = []
-for k, v in json_data.iteritems():
-	data.append([k,v['author'],v['text']])
-users = [row[1] for row in data]
-users = set(users)
+USER_COMMENTS_FILE_PATH = 'train_balanced_user.csv'
 
 
-output_file = open(USER_COMMENTS,'w')
-wr = csv.writer(output_file, quoting=csv.QUOTE_ALL)
+def main():
+    users_comments_dict = collections.defaultdict(list)
+
+    with tqdm(desc="Grouping comments by user", total=12704751) as progress_bar:
+        inside_comment = False
+        comment_text = None
+        comment_username = None
+
+        with open(COMMENTS_DATASET_FILE_PATH, 'rb') as file_:
+            # As the JSON file is large (2.5GB) and everything is in one line, is better to read it as a stream,
+            # using a SAX-like approach.
+            for prefix, type_, value in ijson.parse(file_):
+                if inside_comment:
+                    if prefix.endswith('.text'):
+                        comment_text = value
+                    elif prefix.endswith('.author'):
+                        comment_username = value
+                    elif type_ == 'end_map':  # This assumes there are no nested maps inside the comment maps.
+                        if comment_text and comment_username and comment_text != 'nan' \
+                                and comment_username != '[deleted]':
+                            users_comments_dict[comment_username].append(comment_text)
+
+                        inside_comment = False
+                        comment_text = None
+                        comment_username = None
+
+                        progress_bar.update()
+                elif type_ == 'start_map' and prefix:
+                    inside_comment = True
+
+    with open(USER_COMMENTS_FILE_PATH, 'w') as output_file:
+        writer = csv.writer(output_file, quoting=csv.QUOTE_ALL)
+        writer.writerows((user, " <END> ".join(comments_texts))
+                         for user, comments_texts in iteritems(users_comments_dict))
 
 
-# Accumulate comments of each user into paragraphs
-sys.stdout.write("Accumulating user comments..."+'\r')
-sys.stdout.flush()
-for ind, user in enumerate(users):
-	if ind%100 ==0:
-		sys.stdout.write(str(ind+1) +"/"+ str(len(users))+" users done..."+'\r' )
-		sys.stdout.flush()
-
-	comments = [row[2] for row in data if row[1]==user]
-	comments = [x for x in comments if str(x) != 'nan']
-	comment = " <END> ".join(comments)
-
-
-	ls=[]
-	ls.append(user)
-	ls.append(comment)
-	wr.writerow(ls)
+if __name__ == '__main__':
+    main()

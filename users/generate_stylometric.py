@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pandas as pd
 import numpy as np
 import csv
@@ -13,7 +14,7 @@ if not os.path.exists(directory):
 file = open(directory+"/user_stylometric.csv",'w')
 wr = csv.writer(file, quoting=csv.QUOTE_ALL)
 
-# Infering paragraphVec vectors for each user
+# Inferring paragraphVec vectors for each user
 vectors = np.asarray([doc2vec.infer_vector(data[i][1]) for i in range(data.shape[0])])
 
 users = data[:,0]	

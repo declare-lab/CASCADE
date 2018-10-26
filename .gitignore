@@ -1,0 +1,13 @@
+/data/
+!/data/my_test_balanced.csv
+!/data/my_train_balanced.csv
+!/data/personality_essay.csv
+
+/users/user_embeddings/
+!/users/user_embeddings/_.txt
+
+/users/train_balanced_user.csv
+/users/mr.p
+
+/src/mainbalancedpickle.p
+/src/models

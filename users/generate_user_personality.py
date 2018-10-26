@@ -1,5 +1,4 @@
-#! /usr/bin/env python
-
+#!/usr/bin/env python
 import tensorflow as tf
 import pickle
 import numpy as np
@@ -107,7 +106,7 @@ with graph.as_default():
 
     res = []
     for user in user_set:
-        print user
+        print(user)
         ls = []
         if mp_count[user] == 0:
             print("Error")
@@ -121,7 +120,7 @@ with graph.as_default():
         ls.append(mp_vec[user])
         res.append(ls)
 
-    with open(csvfile,"w") as output:
+    with open(csvfile, "w") as output:
         writer = csv.writer(output)
         for val in res:
             writer.writerow(val)

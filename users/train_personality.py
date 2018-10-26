@@ -1,16 +1,15 @@
-#! /usr/bin/env python
-import cPickle
+#!/usr/bin/env python
+import pickle
 import tensorflow as tf
 import numpy as np
 np.random.seed(10)
-import os
+
 import time
 import datetime
 import data_helpers
 from text_cnn import TextCNN
 import os
-from tensorflow.contrib import learn
-import sys
+
 # Parameters
 # ==================================================
 
@@ -47,11 +46,10 @@ print("")
 # Data Preparation
 # ==================================================
 
-print "loading data...",
-x = cPickle.load(open("mr.p","rb"))
+print("loading data...", end=' ')
+x = pickle.load(open("mr.p","rb"))
 revs, W, W2, word_idx_map, vocab = x[0], x[1], x[2], x[3], x[4]
-print "data loaded!"# Load data
-
+print("data loaded!")  # Load data
 
 x_text = np.asarray([revs[i]['text'] for i in range(len(revs))])
 y = np.asarray([revs[i]['Label'] for i in range(len(revs))])

@@ -1,7 +1,7 @@
+#!/usr/bin/env python
 import pandas as pd
 import numpy as np
 import csv
-import gensim
 
 doc_data = np.asarray(pd.read_csv('./user_embeddings/user_stylometric.csv', header=None))
 per_data = np.asarray(pd.read_csv('./user_embeddings/user_personality.csv', header=None))

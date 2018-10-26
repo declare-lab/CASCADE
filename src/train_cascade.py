@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pickle
 import tensorflow as tf
 import numpy as np
@@ -282,7 +283,7 @@ for batch in batches:
             a, b = dev_step(x_dev_batch, author_dev_batch, topic_dev_batch, y_dev_batch)
             dev_loss.append(a)
             conf_mat += b
-        valid_accuracy =  float(conf_mat[0][0]+conf_mat[1][1])/len(y_dev)
+        valid_accuracy = float(conf_mat[0][0]+conf_mat[1][1])/len(y_dev)
         print("Valid loss {:g}, Valid acc {:g}".format(np.mean(np.asarray(dev_loss)), valid_accuracy))
         print("Valid - Confusion Matrix: ")
         print(conf_mat)
@@ -306,5 +307,4 @@ for batch in batches:
             directory = "./models"
             if not os.path.exists(directory):
                 os.makedirs(directory)
-            saver.save(sess, directory+'/main_balanced_user_plus_topic',global_step=1)
-
+            saver.save(sess, directory+'/main_balanced_user_plus_topic', global_step=1)
