@@ -1,11 +1,15 @@
+#!/usr/bin/env python
+from __future__ import print_function
+
 import numpy as np
 import pickle
 from collections import defaultdict
 import sys, re
 import pandas as pd
-import csv
 import json
-import codecs
+
+# noinspection PyCompatibility
+from builtins import range
 
 COMMENTS_FILE = "../data/comments.json"
 TRAIN_MAP_FILE = "../data/my_train_balanced.csv"
@@ -120,7 +124,7 @@ def load_fasttext(fname, vocab):
     """
     Loads 300x1 word vecs from Fasttext
     """
-    print "Loading FastText Model"
+    print("Loading FastText Model")
     f = open(fname,'r')
     model = {}
     for line in f:
@@ -130,10 +134,8 @@ def load_fasttext(fname, vocab):
         if word in vocab:
                model[word] = embedding
 
-    print "Done.",len(model)," words loaded!"
+    print("Done.", len(model), " words loaded!")
     return model
-
-    return word_vecs
 
 def load_bin_vec(fname, vocab):
     """
@@ -144,7 +146,7 @@ def load_bin_vec(fname, vocab):
         header = f.readline()
         vocab_size, layer1_size = map(int, header.split())
         binary_len = np.dtype('float32').itemsize * layer1_size
-        for line in xrange(vocab_size):
+        for line in range(vocab_size):
             word = []
             while True:
                 ch = f.read(1)

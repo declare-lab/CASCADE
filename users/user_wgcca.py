@@ -1,11 +1,13 @@
-import pickle, gzip, os, sys, time
-import json
+#!/usr/bin/env python
+import argparse
+import gzip
+import pickle
+
 import numpy as np
 import scipy
-import scipy.sparse
 import scipy.linalg
+import scipy.sparse
 
-import argparse
 
 class WeightedGCCA:
   '''

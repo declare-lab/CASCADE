@@ -1,8 +1,13 @@
+#!/usr/bin/env python
 import numpy as np
-import cPickle
+import pickle
 from collections import defaultdict
 import sys, re
 import pandas as pd
+
+# noinspection PyCompatibility
+from builtins import range
+
 #./../GoogleNews-vectors-negative300.bin
 
 def build_data_cv(data_folder, cv=10, clean_string=True):
@@ -36,10 +41,10 @@ def build_data_cv(data_folder, cv=10, clean_string=True):
         fb_Labels.append([int(fb_train_data[i][j]) for j in range(1,6,1)])
 
     paragraphs = np.append(paragraphs, fb_paragraphs)
-    print paragraphs.shape
+    print(paragraphs.shape)
     Labels = np.append(Labels,fb_Labels,0)
-    print Labels.shape
-   
+    print(Labels.shape)
+
     ind = 0 
     for line in paragraphs: 
     	rev = []
@@ -84,7 +89,7 @@ def load_bin_vec(fname, vocab):
         header = f.readline()
         vocab_size, layer1_size = map(int, header.split())
         binary_len = np.dtype('float32').itemsize * layer1_size
-        for line in xrange(vocab_size):
+        for line in range(vocab_size):
             word = []
             while True:
                 ch = f.read(1)
@@ -103,7 +108,7 @@ def load_fasttext(fname, vocab):
     """
     Loads 300x1 word vecs from Fasttext
     """
-    print "Loading FastText Model"
+    print("Loading FastText Model")
     f = open(fname,'r')
     model = {}
     for line in f:
@@ -113,10 +118,8 @@ def load_fasttext(fname, vocab):
         if word in vocab:
                model[word] = embedding
 
-    print "Done.",len(model)," words loaded!"
+    print("Done.", len(model), " words loaded!")
     return model
-
-    return word_vecs
 
 def add_unknown_words(word_vecs, vocab, min_df=1, k=300):
     """
@@ -157,22 +160,22 @@ def clean_str_sst(string):
 
 if __name__=="__main__":    
     w2v_file = sys.argv[1]     
-    data_folder = ["../data/personality_essay.csv","../data/personality_input.csv"]    
-    print"loading data...",        
+    data_folder = ["../data/personality_essay.csv","../data/personality_input.csv"]
+    print()
     revs, vocab = build_data_cv(data_folder, cv=10, clean_string=True)
     max_l = np.max(pd.DataFrame(revs)["num_words"])
-    print "data loaded!"
-    print "number of sentences: " + str(len(revs))
-    print "vocab size: " + str(len(vocab))
-    print "max sentence length: " + str(max_l)
-    print "loading word2vec vectors...",
+    print("data loaded!")
+    print("number of sentences: " + str(len(revs)))
+    print("vocab size: " + str(len(vocab)))
+    print("max sentence length: " + str(max_l))
+    print("loading word2vec vectors...", end=' ')
     w2v = load_fasttext(w2v_file, vocab)
-    print "word2vec loaded!"
-    print "num words already in word2vec: " + str(len(w2v))
+    print("word2vec loaded!")
+    print("num words already in word2vec: " + str(len(w2v)))
     add_unknown_words(w2v, vocab)
     W, word_idx_map = get_W(w2v)
     rand_vecs = {}
     add_unknown_words(rand_vecs, vocab)
     W2, _ = get_W(rand_vecs)
-    cPickle.dump([revs, W, W2, word_idx_map, vocab], open("mr.p", "wb"))
-    print "dataset created!"
+    pickle.dump([revs, W, W2, word_idx_map, vocab], open("mr.p", "wb"))
+    print("dataset created!")
