@@ -1,6 +1,6 @@
 # CASCADE: Contextual Sarcasm Detection in Online Discussion Forums
 
-Code for the paper [CASCADE: Contextual Sarcasm Detection in Online Discussion Forums](http://aclweb.org/anthology/C18-1156) (COLING 2018).
+Code for the paper [CASCADE: Contextual Sarcasm Detection in Online Discussion Forums](http://aclweb.org/anthology/C18-1156) (COLING 2018, New Mexico).
 
 ## Description
 
