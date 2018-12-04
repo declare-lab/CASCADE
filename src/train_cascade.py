@@ -54,7 +54,7 @@ print('wgcca embeddings loaded')
 
 
 
-ids = wgcca_embeddings['ids']
+ids = ["unknown"] + wgcca_embeddings['ids']
 user_embeddings = wgcca_embeddings['G']
 unknown_vector = np.random.normal(size=(1,100))
 user_embeddings = np.concatenate((unknown_vector, user_embeddings), axis=0)
