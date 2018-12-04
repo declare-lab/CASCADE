@@ -15,6 +15,18 @@ from time import sleep
 import pickle
 
 
+#####################  GPU Configs  #################################
+
+# Selecting the GPU to work on
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
+
+# Desired graphics card config
+session_conf = tf.ConfigProto(
+      allow_soft_placement=True,
+      log_device_placement=False,
+      gpu_options=tf.GPUOptions(allow_growth=True))
+
 # Parameters
 # ==================================================
 
@@ -32,7 +44,7 @@ tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (defau
 tf.flags.DEFINE_float("l2_reg_lambda", 0.5, "L2 regularization lambda (default: 0.0)")
 
 # Training parameters
-tf.flags.DEFINE_integer("batch_size", 512, "Batch Size (default: 64)")
+tf.flags.DEFINE_integer("batch_size", 4096, "Batch Size (default: 64)")
 tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs (default: 200)")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps (default: 100)")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps (default: 100)")
@@ -54,7 +66,7 @@ print('wgcca embeddings loaded')
 
 
 
-ids = ["unknown"] + wgcca_embeddings['ids']
+ids = ["unknown"] + list(wgcca_embeddings['ids'])
 user_embeddings = wgcca_embeddings['G']
 unknown_vector = np.random.normal(size=(1,100))
 user_embeddings = np.concatenate((unknown_vector, user_embeddings), axis=0)
@@ -183,9 +195,7 @@ rev_dict = {v: k for k, v in word_idx_map.items()}
 # ==================================================
 
 with tf.Graph().as_default():
-    session_conf = tf.ConfigProto(
-      allow_soft_placement=FLAGS.allow_soft_placement,
-      log_device_placement=FLAGS.log_device_placement)
+
     sess = tf.Session(config=session_conf)
     with sess.as_default():
         cnn = TextCNN(
