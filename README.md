@@ -12,7 +12,7 @@ In this paper, we propose a ContextuAl SarCasm DEtector (CASCADE), which adopts 
 2. Python (2.7 or 3.3-3.6)  
 3. Install your preferred version of TensorFlow 1.4.0 (for CPU, GPU; from PyPI, compiled, etc).
 4. Install the rest of the requirements: `pip install -r requirements.txt`
-5. Download the [FastText pre-trained embeddings](https://s3-us-west-1.amazonaws.com/fasttext-vectors/crawl-300d-2M.vec.zip) and extract it somewhere.
+5. Download the [FastText pre-trained embeddings](https://dl.fbaipublicfiles.com/fasttext/vectors-english/crawl-300d-2M.vec.zip) and extract it somewhere.
 6. Download the [`comments.json` dataset file](https://drive.google.com/file/d/1ew-85sh2z3fv1yGgIwBoeIHUvP8fMnxU/view?usp=sharing) [1] and place it in `data/`.
 7. If you want to run the Preprocessing steps (optional), install YAJL 2, download [the `train-balanced.csv` file](https://drive.google.com/file/d/18GwcTqXo_lcMJmc5ms6s2KaL0Dh-95GP/view), save it under `data/` and continue with the [Preprocessing instructions](#preprocessing). Otherwise, just download [user_gcca_embeddings.npz](https://drive.google.com/file/d/1mQoe_48LO67plyo98DVeCC9NabVXdm82/view?usp=sharing), place it in `users/user_embeddings/` and go directly to [Running CASCADE section](#running-cascade).
 
