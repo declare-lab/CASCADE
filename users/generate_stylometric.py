@@ -15,7 +15,7 @@ file = open(directory+"/user_stylometric.csv",'w')
 wr = csv.writer(file, quoting=csv.QUOTE_ALL)
 
 # Inferring paragraphVec vectors for each user
-vectors = np.asarray([doc2vec.infer_vector(data[i][1]) for i in range(data.shape[0])])
+vectors = np.asarray([doc2vec.infer_vector([data[i][1]]) for i in range(data.shape[0])])
 
 users = data[:,0]	
 for i in range(len(users)):
